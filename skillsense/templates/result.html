@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Your Results &mdash; SkillSense</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body class="result-page">
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="/">Skill<span>Sense</span></a>
+    <div class="nav-links"><a href="/">Home</a><a href="/history">History</a><span class="nav-user">👤 {{ username }}</span><a href="/logout" class="nav-logout">Sign Out</a></div>  </div>
+</nav>
+
+<section class="result-hero">
+  <div class="rh-bg"><div class="blob b1"></div><div class="blob b3"></div></div>
+  <div class="container">
+    <div class="badge">&#10022; Analysis Complete</div>
+    <h1>Hello, <span class="gradient-text">{{ form.get('name', 'there') }}</span>!</h1>
+    <p class="hero-sub">Our ML engine found <strong>{{ recommendations|length }}</strong> personalised skill recommendations for you.</p>
+  </div>
+</section>
+
+{% if recommendations %}
+{% set top = recommendations[0] %}
+<section class="top-pick-section">
+  <div class="container">
+    <div class="top-pick-card">
+      <div class="tp-left">
+        <div class="tp-label">&#127942; Best Match &mdash; Rank #1</div>
+        <h2 class="tp-skill">{{ top.skill }}</h2>
+        <div class="tp-score-bar-wrap">
+          <div class="tp-score-label">Compatibility Score</div>
+          <div class="tp-bar-track"><div class="tp-bar-fill" id="topBar" style="width:0%"></div></div>
+          <div class="tp-score-num">{{ top.score }}%</div>
+        </div>
+        <div class="tp-tags">
+          <span class="tag tag-demand">{{ top.demand_level }} Demand</span>
+          <span class="tag tag-salary">
+            {% if top.avg_salary == 'Variable' or top.avg_salary == 'variable' %}
+              Variable Salary
+            {% else %}
+              Avg. ${{ '{:,}'.format(top.avg_salary|int) }}/yr
+            {% endif %}
+          </span>
+        </div>
+      </div>
+      <div class="tp-right">
+        <div class="tp-section-label">Why This Skill?</div>
+        <p class="tp-explanation">{{ top.explanation }}</p>
+        <div class="tp-careers-label">Career Paths</div>
+        <div class="tp-careers">
+          {% for c in top.career_paths.split(',') %}
+            <span class="career-chip">{{ c.strip() }}</span>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="recs-section">
+  <div class="container">
+    <div class="section-label">All Recommendations</div>
+    <h2 class="section-title">Your Top 5 Skill Paths</h2>
+    <div class="recs-grid">
+      {% for rec in recommendations %}
+      <div class="rec-card {% if rec.rank == 1 %}rec-card--top{% endif %}" style="animation-delay:{{ loop.index0 * 0.08 }}s">
+        <div class="rc-header">
+          <div class="rc-rank">#{{ rec.rank }}</div>
+          <div class="rc-skill">{{ rec.skill }}</div>
+          <div class="rc-score">{{ rec.score }}%</div>
+        </div>
+        <div class="rc-bar-track"><div class="rc-bar-fill" style="width:0%" data-w="{{ rec.score }}"></div></div>
+        <p class="rc-desc">{{ rec.description[:155] }}...</p>
+        <div class="rc-meta">
+          <div class="rc-meta-item">&#128176;
+            {% if rec.avg_salary == 'Variable' or rec.avg_salary == 'variable' %}
+              Variable
+            {% else %}
+              ${{ '{:,}'.format(rec.avg_salary|int) }}/yr
+            {% endif %}
+          </div>
+          <div class="rc-meta-item">&#128200; {{ rec.demand_level }}</div>
+        </div>
+        <details class="rc-expand">
+          <summary>Why this recommendation?</summary>
+          <p class="rc-explanation">{{ rec.explanation }}</p>
+          <div class="rc-careers">
+            {% for c in rec.career_paths.split(',') %}<span class="career-chip">{{ c.strip() }}</span>{% endfor %}
+          </div>
+        </details>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% else %}
+<section class="container" style="padding:5rem 1rem;text-align:center">
+  <h2>No recommendations found.</h2>
+  <p style="margin-top:1rem;color:#6b7a99">Please go back and fill in more profile details.</p>
+  <a href="/" class="cta-btn" style="margin-top:2rem;display:inline-flex">&#8592; Try Again</a>
+</section>
+{% endif %}
+
+<section class="profile-summary-section">
+  <div class="container">
+    <div class="ps-card">
+      <div class="section-label">Profile Used</div>
+      <h3>Your Input Summary</h3>
+      <div class="ps-grid">
+        {% if form.get('qualification') %}<div class="ps-item"><span class="ps-key">Qualification</span><span class="ps-val">{{ form.get('qualification') }}</span></div>{% endif %}
+        {% if form.get('programming_languages') %}<div class="ps-item"><span class="ps-key">Languages</span><span class="ps-val">{{ form.get('programming_languages') }}</span></div>{% endif %}
+        {% if form.get('skills') %}<div class="ps-item"><span class="ps-key">Skills</span><span class="ps-val">{{ form.get('skills') }}</span></div>{% endif %}
+        {% if form.get('subjects') %}<div class="ps-item"><span class="ps-key">Subjects</span><span class="ps-val">{{ form.get('subjects') }}</span></div>{% endif %}
+        {% if form.get('certifications') %}<div class="ps-item"><span class="ps-key">Certifications</span><span class="ps-val">{{ form.get('certifications') }}</span></div>{% endif %}
+        {% if form.get('interests') %}<div class="ps-item"><span class="ps-key">Interests</span><span class="ps-val">{{ form.get('interests') }}</span></div>{% endif %}
+      </div>
+      <a href="/" class="cta-btn" style="margin-top:2rem;display:inline-flex">&#8592; Try Another Profile</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span class="logo">Skill<span>Sense</span></span>
+      <span class="footer-note">Built with Python &middot; Flask &middot; TF-IDF &middot; SQLite</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+window.addEventListener("load", function(){
+  var topBar = document.getElementById("topBar");
+  if(topBar){ setTimeout(function(){ topBar.style.width = "{{ top.score if recommendations else 0 }}%"; topBar.style.transition = "width 1.4s cubic-bezier(0.22,1,0.36,1)"; }, 200); }
+  document.querySelectorAll(".rc-bar-fill").forEach(function(el){
+    var w = el.getAttribute("data-w");
+    setTimeout(function(){ el.style.width = w + "%"; el.style.transition = "width 1s ease"; }, 400);
+  });
+});
+</script>
+</body>
+</html>

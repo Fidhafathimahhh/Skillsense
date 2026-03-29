@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>History &mdash; SkillSense</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<nav class="nav">
+  <div class="nav-inner">
+    <a class="logo" href="/">Skill<span>Sense</span></a>
+    <div class="nav-links"><a href="/">Home</a><a href="/history" class="active">History</a><span class="nav-user">👤 {{ username }}</span><a href="/logout" class="nav-logout">Sign Out</a></div>
+  </div>
+</nav>
+
+<section class="result-hero" style="padding:7rem 0 3rem">
+  <div class="rh-bg"><div class="blob b2"></div></div>
+  <div class="container">
+    <div class="badge">&#10022; SQLite Database</div>
+    <h1>Recommendation <span class="gradient-text">History</span></h1>
+    <p class="hero-sub">All past analyses stored securely in your local database.</p>
+  </div>
+</section>
+
+<section class="history-section">
+  <div class="container">
+    <div class="stats-row">
+      <div class="stat-card">
+        <div class="stat-num">{{ stats.total_users }}</div>
+        <div class="stat-label">Total Users</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num">{{ stats.total_recommendations }}</div>
+        <div class="stat-label">Total Recommendations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-num" style="font-size:1.3rem;padding-top:0.4rem">{{ stats.top_skill }}</div>
+        <div class="stat-label">Most Recommended</div>
+      </div>
+    </div>
+
+    {% if records %}
+    <div class="table-wrap">
+      <table class="history-table">
+        <thead>
+          <tr><th>#</th><th>Name</th><th>Qualification</th><th>Top Skill</th><th>Score</th><th>Demand</th><th>Date</th></tr>
+        </thead>
+        <tbody>
+          {% for r in records %}
+          <tr>
+            <td>{{ loop.index }}</td>
+            <td><strong>{{ r[0] }}</strong></td>
+            <td>{{ r[1] or '&mdash;' }}</td>
+            <td><span class="skill-badge">{{ r[2] }}</span></td>
+            <td>
+              <div class="mini-bar-track"><div class="mini-bar-fill" style="width:{{ r[3] }}%"></div></div>
+              <small>{{ r[3] }}%</small>
+            </td>
+            <td><span class="demand-badge demand-{{ r[4].lower().replace(' ','-') }}">{{ r[4] }}</span></td>
+            <td><small>{{ r[5][:10] }}</small></td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+    {% else %}
+    <div class="empty-state">
+      <div class="empty-icon">&#128235;</div>
+      <h3>No history yet</h3>
+      <p>Analyse a profile to see results here.</p>
+      <a href="/" class="cta-btn">Start Now &#8594;</a>
+    </div>
+    {% endif %}
+
+    <div style="margin-top:3rem;text-align:center">
+      <a href="/" class="cta-btn">&#8592; New Analysis</a>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="footer-inner">
+      <span class="logo">Skill<span>Sense</span></span>
+      <span class="footer-note">Built with Python &middot; Flask &middot; TF-IDF &middot; SQLite</span>
+    </div>
+  </div>
+</footer>
+</body>
+</html>

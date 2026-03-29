@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Sign In &mdash; SkillSense</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
+</head>
+<body>
+<div class="auth-bg">
+  <div class="blob b1"></div><div class="blob b2"></div><div class="grid-overlay" style="position:fixed;inset:0;opacity:0.4"></div>
+</div>
+<div class="auth-page">
+  <div class="auth-card">
+    <div class="auth-logo">Skill<span>Sense</span></div>
+    <div class="auth-subtitle">AI Career Path Recommender</div>
+    <div class="auth-title">Welcome Back</div>
+    <p style="text-align:center;color:var(--text-muted);font-size:0.85rem;margin-bottom:1.8rem">Sign in to continue to your dashboard</p>
+    <form method="POST" action="/login">
+      <div class="auth-field">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Enter your username" required autocomplete="username" class="{{ 'error-field' if error_user else '' }}"/>
+        {% if error_user %}<div class="auth-error">{{ error_user }}</div>{% endif %}
+      </div>
+      <div class="auth-field">
+        <label>Password</label>
+        <input type="password" name="password" placeholder="Enter your password" required autocomplete="current-password" class="{{ 'error-field' if error_pass else '' }}"/>
+        {% if error_pass %}<div class="auth-error">{{ error_pass }}</div>{% endif %}
+      </div>
+      <button type="submit" class="auth-btn">Sign In &rarr;</button>
+    </form>
+    <hr class="auth-divider"/>
+    <div class="auth-links">
+      <a href="/signup">Don't have an account? <span>Sign Up</span></a>
+      <a href="/forgot-password">Forgot your password?</a>
+    </div>
+  </div>
+</div>
+</body>
+</html>
