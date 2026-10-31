@@ -1,158 +1,266 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8"/>
-  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-  <title>SkillSense — AI Skill Recommender</title>
-  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}"/>
-</head>
-<body>
-
-<nav class="nav">
-  <div class="nav-inner">
-    <a class="logo" href="/">Skill<span>Sense</span></a>
-    <div class="nav-links">
-      <a href="/">Home</a>
-      <a href="/history">History</a>
-      <span class="nav-user">👤 {{ username }}</span>
-      <a href="/logout" class="nav-logout">Sign Out</a>
-    </div>
-  </div>
-</nav>
-
-<header class="hero">
-  <div class="hero-bg">
-    <div class="blob b1"></div>
-    <div class="blob b2"></div>
-    <div class="grid-overlay"></div>
-  </div>
-  <div class="hero-content">
-    <div class="badge">✦ ML-Powered &middot; TF-IDF + Cosine Similarity</div>
-    <h1>Discover Your<br/><span class="gradient-text">Perfect Skill Path</span></h1>
-    <p class="hero-sub">Enter your background and let our AI engine map your unique strengths to the highest-impact career skills — across every field.</p>
-    <a href="#form-section" class="cta-btn" id="startBtn">
-      Start Analysis
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
-    </a>
-  </div>
-  <div class="floating-cards">
-    <div class="fc fc1"><span>🤖</span><span>Machine Learning</span></div>
-    <div class="fc fc2"><span>⚖️</span><span>Law &amp; Legal Studies</span></div>
-    <div class="fc fc3"><span>🏥</span><span>Medicine &amp; Healthcare</span></div>
-    <div class="fc fc4"><span>💰</span><span>Finance &amp; Banking</span></div>
-  </div>
-</header>
-
-<section class="how-section">
-  <div class="container">
-    <div class="section-label">How It Works</div>
-    <h2 class="section-title">Three Steps to Clarity</h2>
-    <div class="steps">
-      <div class="step">
-        <div class="step-num">01</div>
-        <div class="step-body"><h3>Enter Your Profile</h3><p>Share your qualification, skills, interests, and programming knowledge — any field, any background.</p></div>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
+    <title>SkillSense — AI Skill Recommender</title>
+    <link
+      rel="stylesheet"
+      href="{{ url_for('static', filename='style.css') }}"
+    />
+  </head>
+  <body>
+    <!-- Navigation Bar -->
+    <nav class="nav">
+      <div class="nav-inner">
+        <a class="logo" href="/">Skill<span>Sense</span></a>
+        <div class="nav-links">
+          <a href="/">Home</a>
+          <a href="/history">History</a>
+          <span class="nav-user">👤 {{ username }}</span>
+          <a href="/logout" class="nav-logout">Sign Out</a>
+        </div>
       </div>
-      <div class="step-arrow">&#8594;</div>
-      <div class="step">
-        <div class="step-num">02</div>
-        <div class="step-body"><h3>ML Analysis</h3><p>TF-IDF vectorises your profile and cosine similarity scores it against 65+ career paths across all industries.</p></div>
-      </div>
-      <div class="step-arrow">&#8594;</div>
-      <div class="step">
-        <div class="step-num">03</div>
-        <div class="step-body"><h3>Get Results</h3><p>Receive personalised top-5 skills with AI-generated explanations, salaries, and career paths.</p></div>
-      </div>
-    </div>
-  </div>
-</section>
+    </nav>
 
-<section id="form-section" class="form-section">
-  <div class="container">
-    <div class="form-wrap">
-      <div class="form-header">
-        <div class="section-label">Your Profile</div>
-        <h2 class="section-title">Tell Us About Yourself</h2>
-        <p>Fill in as many fields as possible for the most accurate recommendations. Works for every field — tech, medicine, law, arts, business and more.</p>
+    <header class="hero">
+      <div class="hero-bg">
+        <div class="blob b1"></div>
+        <div class="blob b2"></div>
+        <div class="grid-overlay"></div>
       </div>
-      <form action="/recommend" method="POST" class="skill-form" id="skillForm">
-        <div class="form-row two-col">
-          <div class="field-group">
-            <label for="name">&#128100; Full Name</label>
-            <input type="text" id="name" name="name" placeholder="e.g. Priya Sharma" required/>
-          </div>
-          <div class="field-group">
-            <label for="email">&#9993; Email</label>
-            <input type="email" id="email" name="email" placeholder="e.g. priya@email.com"/>
-          </div>
+      <div class="hero-content">
+        <div class="badge">
+          ✦ ML-Powered &middot; TF-IDF + Cosine Similarity
         </div>
-        <div class="form-row">
-          <div class="field-group">
-            <label for="qualification">&#127891; Qualification / Degree</label>
-            <input type="text" id="qualification" name="qualification" placeholder="e.g. MBBS, LLB, B.Tech CS, B.Com, BFA, B.Arch"/>
-          </div>
+        <h1>
+          Discover Your<br /><span class="gradient-text"
+            >Perfect Skill Path</span
+          >
+        </h1>
+        <p class="hero-sub">
+          Enter your background and let our AI engine map your unique strengths
+          to the highest-impact career skills — across every field.
+        </p>
+        <a href="#form-section" class="cta-btn" id="startBtn">
+          Start Analysis
+          <svg
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          >
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </a>
+      </div>
+      <div class="floating-cards">
+        <div class="fc fc1"><span>🤖</span><span>Machine Learning</span></div>
+        <div class="fc fc2">
+          <span>⚖️</span><span>Law &amp; Legal Studies</span>
         </div>
-        <div class="form-row two-col">
-          <div class="field-group">
-            <label for="subjects">&#128218; Subjects Known</label>
-            <input type="text" id="subjects" name="subjects" placeholder="e.g. Anatomy, Calculus, Law, Accounting, Drawing"/>
-            <small>Comma-separated</small>
-          </div>
-          <div class="field-group">
-            <label for="programming_languages">&#128187; Programming Languages</label>
-            <input type="text" id="programming_languages" name="programming_languages" placeholder="e.g. Python, Java, C++ (or leave blank)"/>
-            <small>Comma-separated</small>
-          </div>
+        <div class="fc fc3">
+          <span>🏥</span><span>Medicine &amp; Healthcare</span>
         </div>
-        <div class="form-row">
-          <div class="field-group">
-            <label for="skills">&#11088; Current Skills</label>
-            <input type="text" id="skills" name="skills" placeholder="e.g. Patient Care, Legal Drafting, Painting, SQL, Teaching"/>
-            <small>Comma-separated</small>
-          </div>
+        <div class="fc fc4">
+          <span>💰</span><span>Finance &amp; Banking</span>
         </div>
-        <div class="form-row two-col">
-          <div class="field-group">
-            <label for="certifications">&#127941; Certifications</label>
-            <input type="text" id="certifications" name="certifications" placeholder="e.g. CA, MBBS License, AWS, Bar Exam (or leave blank)"/>
-            <small>Comma-separated</small>
-          </div>
-          <div class="field-group">
-            <label for="interests">&#10084; Areas of Interest</label>
-            <input type="text" id="interests" name="interests" placeholder="e.g. Healthcare, Justice, Finance, Art, Technology"/>
-            <small>Comma-separated</small>
-          </div>
-        </div>
-        <div class="form-submit">
-          <button type="submit" class="submit-btn" id="submitBtn">
-            <span class="btn-text">Analyse My Profile &#8594;</span>
-            <span class="btn-loader" style="display:none">Analysing&#8230;</span>
-          </button>
-        </div>
-      </form>
-    </div>
-  </div>
-</section>
+      </div>
+    </header>
 
-<footer class="footer">
-  <div class="container">
-    <div class="footer-inner">
-      <span class="logo">Skill<span>Sense</span></span>
-      <span class="footer-note">Built with Python &middot; Flask &middot; TF-IDF &middot; SQLite &middot; 65+ Skills</span>
-    </div>
-  </div>
-</footer>
+    <section class="how-section">
+      <div class="container">
+        <div class="section-label">How It Works</div>
+        <h2 class="section-title">Three Steps to Clarity</h2>
+        <div class="steps">
+          <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-body">
+              <h3>Enter Your Profile</h3>
+              <p>
+                Share your qualification, skills, interests, and programming
+                knowledge — any field, any background.
+              </p>
+            </div>
+          </div>
+          <div class="step-arrow">&#8594;</div>
+          <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-body">
+              <h3>ML Analysis</h3>
+              <p>
+                TF-IDF vectorises your profile and cosine similarity scores it
+                against 65+ career paths across all industries.
+              </p>
+            </div>
+          </div>
+          <div class="step-arrow">&#8594;</div>
+          <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-body">
+              <h3>Get Results</h3>
+              <p>
+                Receive personalised top-5 skills with AI-generated
+                explanations, salaries, and career paths.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<script>
-document.getElementById("startBtn").addEventListener("click",function(e){
-  e.preventDefault();
-  document.getElementById("form-section").scrollIntoView({behavior:"smooth"});
-});
-document.getElementById("skillForm").addEventListener("submit",function(){
-  var btn=document.getElementById("submitBtn");
-  btn.querySelector(".btn-text").style.display="none";
-  btn.querySelector(".btn-loader").style.display="inline";
-  btn.disabled=true;
-});
-</script>
-</body>
+    <section id="form-section" class="form-section">
+      <div class="container">
+        <div class="form-wrap">
+          <div class="form-header">
+            <div class="section-label">Your Profile</div>
+            <h2 class="section-title">Tell Us About Yourself</h2>
+            <p>
+              Fill in as many fields as possible for the most accurate
+              recommendations. Works for every field — tech, medicine, law,
+              arts, business and more.
+            </p>
+          </div>
+          <form
+            action="/recommend"
+            method="POST"
+            class="skill-form"
+            id="skillForm"
+          >
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label for="name">&#128100; Full Name</label>
+                <input
+                  type="text"
+                  id="name"
+                  name="name"
+                  placeholder="e.g. Priya Sharma"
+                  required
+                />
+              </div>
+              <div class="field-group">
+                <label for="email">&#9993; Email</label>
+                <input
+                  type="email"
+                  id="email"
+                  name="email"
+                  placeholder="e.g. priya@email.com"
+                />
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field-group">
+                <label for="qualification"
+                  >&#127891; Qualification / Degree</label
+                >
+                <input
+                  type="text"
+                  id="qualification"
+                  name="qualification"
+                  placeholder="e.g. MBBS, LLB, B.Tech CS, B.Com, BFA, B.Arch"
+                />
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label for="subjects">&#128218; Subjects Known</label>
+                <input
+                  type="text"
+                  id="subjects"
+                  name="subjects"
+                  placeholder="e.g. Anatomy, Calculus, Law, Accounting, Drawing"
+                />
+                <small>Comma-separated</small>
+              </div>
+              <div class="field-group">
+                <label for="programming_languages"
+                  >&#128187; Programming Languages</label
+                >
+                <input
+                  type="text"
+                  id="programming_languages"
+                  name="programming_languages"
+                  placeholder="e.g. Python, Java, C++ (or leave blank)"
+                />
+                <small>Comma-separated</small>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="field-group">
+                <label for="skills">&#11088; Current Skills</label>
+                <input
+                  type="text"
+                  id="skills"
+                  name="skills"
+                  placeholder="e.g. Patient Care, Legal Drafting, Painting, SQL, Teaching"
+                />
+                <small>Comma-separated</small>
+              </div>
+            </div>
+            <div class="form-row two-col">
+              <div class="field-group">
+                <label for="certifications">&#127941; Certifications</label>
+                <input
+                  type="text"
+                  id="certifications"
+                  name="certifications"
+                  placeholder="e.g. CA, MBBS License, AWS, Bar Exam (or leave blank)"
+                />
+                <small>Comma-separated</small>
+              </div>
+              <div class="field-group">
+                <label for="interests">&#10084; Areas of Interest</label>
+                <input
+                  type="text"
+                  id="interests"
+                  name="interests"
+                  placeholder="e.g. Healthcare, Justice, Finance, Art, Technology"
+                />
+                <small>Comma-separated</small>
+              </div>
+            </div>
+            <div class="form-submit">
+              <button type="submit" class="submit-btn" id="submitBtn">
+                <span class="btn-text">Analyse My Profile &#8594;</span>
+                <span class="btn-loader" style="display: none"
+                  >Analysing&#8230;</span
+                >
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      <div class="container">
+        <div class="footer-inner">
+          <span class="logo">Skill<span>Sense</span></span>
+          <span class="footer-note"
+            >Built with Python &middot; Flask &middot; TF-IDF &middot; SQLite
+            &middot; 65+ Skills</span
+          >
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      document
+        .getElementById("startBtn")
+        .addEventListener("click", function (e) {
+          e.preventDefault();
+          document
+            .getElementById("form-section")
+            .scrollIntoView({ behavior: "smooth" });
+        });
+      document
+        .getElementById("skillForm")
+        .addEventListener("submit", function () {
+          var btn = document.getElementById("submitBtn");
+          btn.querySelector(".btn-text").style.display = "none";
+          btn.querySelector(".btn-loader").style.display = "inline";
+          btn.disabled = true;
+        });
+    </script>
+  </body>
 </html>
