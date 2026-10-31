@@ -4,7 +4,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 df = pd.DataFrame(); tfidf = TfidfVectorizer(); skill_vectors = None
-
+#model_logic
 def load():
     global df, tfidf, skill_vectors
     df = pd.read_csv(os.path.join(BASE_DIR, "dataset.csv"))
