@@ -61,7 +61,7 @@ def login_required(f):
         return f(*args, **kwargs)
     return decorated
 
-# ── AUTH ROUTES ─────────────────────────────
+# ── AUTH ROUTES ───────────────────
 @app.route("/login", methods=["GET","POST"])
 def login():
     error_user = error_pass = None
